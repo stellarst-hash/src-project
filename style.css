@@ -465,6 +465,17 @@ h1,h2,p,label{margin:0}
   padding:0 4px;
 }
 .recovery + .table-controls{margin-top:22px}
+.slider-control{--label-color:#07143b}
+.slider-control label{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  color:var(--label-color);
+  font-size:15px;
+  font-weight:700;
+}
+.slider-control output{font-weight:800}
+.row-height-control{--label-color:var(--green)}
 .table-slider{
   --slider-color:#07143b;
   --slider-progress:50%;
@@ -580,6 +591,7 @@ h1,h2,p,label{margin:0}
   .action-btn svg{width:21px;height:21px}
   .table-controls{gap:10px;margin:0 0 16px;padding:0}
   .recovery + .table-controls{margin-top:12px}
+  .slider-control label{margin-bottom:6px;font-size:13px}
   .reset{height:56px;font-size:21px}
 }
 
