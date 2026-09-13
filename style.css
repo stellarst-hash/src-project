@@ -7,6 +7,9 @@
   --red:#f13c42;
   --green:#20b94e;
   --blue:#1684f4;
+  --table-font-size:27px;
+  --table-row-height:61px;
+  --action-button-height:48px;
 }
 
 *{box-sizing:border-box}
@@ -288,6 +291,12 @@ h1,h2,p,label{margin:0}
   padding:0 20px;
   white-space:nowrap;
 }
+.lot-value.is-disabled{
+  background:var(--field);
+  border-color:var(--line);
+  color:#8b95a3;
+  opacity:.7;
+}
 
 .lot-label{
   grid-column:auto;
@@ -311,7 +320,7 @@ h1,h2,p,label{margin:0}
   border:1px solid #d8e0e8;
   border-radius:14px;
   overflow:hidden;
-  margin:0 4px 32px;
+  margin:0 4px 12px;
   background:rgba(255,255,255,.72);
 }
 
@@ -331,7 +340,7 @@ h1,h2,p,label{margin:0}
   vertical-align:middle;
   text-align:center;
   background:#e8edf4 !important;
-  font-size:27px;
+  font-size:var(--table-font-size);
   line-height:1;
   font-weight:750;
   border-bottom:1px solid #d8e0e8;
@@ -356,17 +365,17 @@ h1,h2,p,label{margin:0}
   border-radius:0;
   background:#e8edf4 !important;
   color:var(--ink);
-  font-size:27px;
+  font-size:var(--table-font-size);
   line-height:1;
   font-weight:750;
 }
 
 .risk-table tbody td{
-  height:61px;
+  height:var(--table-row-height);
   padding:0;
   vertical-align:middle;
   text-align:center;
-  font-size:27px;
+  font-size:var(--table-font-size);
   line-height:1;
   font-weight:500;
   border-bottom:1px solid #dfe5eb;
@@ -408,7 +417,7 @@ h1,h2,p,label{margin:0}
   flex:1 1 0;
   width:auto;
   min-width:0;
-  height:48px;
+  height:var(--action-button-height);
   border:0;
   border-radius:10px;
   display:flex;
@@ -448,6 +457,64 @@ h1,h2,p,label{margin:0}
   stroke-linejoin:round;
 }
 
+.table-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:0 4px 32px;
+  padding:0 4px;
+}
+.recovery + .table-controls{margin-top:22px}
+.table-slider{
+  --slider-color:#07143b;
+  --slider-progress:50%;
+  width:100%;
+  height:8px;
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(to right,var(--slider-color) 0 var(--slider-progress),#fff var(--slider-progress) 100%);
+  cursor:pointer;
+}
+.table-slider::-webkit-slider-runnable-track{
+  height:8px;
+  border:1px solid #dce3eb;
+  border-radius:999px;
+  background:transparent;
+}
+.table-slider::-webkit-slider-thumb{
+  width:18px;
+  height:18px;
+  margin-top:-6px;
+  appearance:none;
+  -webkit-appearance:none;
+  border:2px solid #fff;
+  border-radius:50%;
+  background:var(--slider-color);
+  box-shadow:0 1px 4px rgba(7,20,59,.25);
+}
+.table-slider::-moz-range-track{
+  height:6px;
+  border:1px solid #dce3eb;
+  border-radius:999px;
+  background:#fff;
+}
+.table-slider::-moz-range-progress{
+  height:6px;
+  border-radius:999px;
+  background:var(--slider-color);
+}
+.table-slider::-moz-range-thumb{
+  width:14px;
+  height:14px;
+  border:2px solid #fff;
+  border-radius:50%;
+  background:var(--slider-color);
+  box-shadow:0 1px 4px rgba(7,20,59,.25);
+}
+.row-height-slider{--slider-color:var(--green)}
+
 .reset{
   width:100%;
   height:96px;
@@ -470,6 +537,11 @@ h1,h2,p,label{margin:0}
 }
 
 @media(max-width:767.98px){
+  :root{
+    --table-font-size:14px;
+    --table-row-height:42px;
+    --action-button-height:28px;
+  }
   .page{padding:20px 14px 30px}
   .title{font-size:36px;letter-spacing:-1.3px;margin:0 0 18px}
   .top-panel{padding-left:17px;padding-right:17px}
@@ -498,15 +570,16 @@ h1,h2,p,label{margin:0}
   .lot-stepper .step-btn,.lot-stepper .number-input{height:38px}
   .lot-stepper .step-btn{font-size:22px}
   .lot-stepper .number-input{font-size:18px}
-  .table-wrap{margin:0 0 16px;overflow:hidden}
+  .table-wrap{margin:0 0 10px;overflow:hidden}
   .risk-table{min-width:0}
-  .risk-table thead th{height:40px;font-size:15px}
-  .risk-table thead th.action{height:40px;font-size:15px}
-  .risk-table tbody td{height:42px;font-size:14px}
+  .risk-table thead th{height:40px}
+  .risk-table thead th.action{height:40px}
   .action-cell{padding:0 6px!important}
   .action-buttons{gap:6px}
-  .action-btn{height:28px;border-radius:7px}
+  .action-btn{border-radius:7px}
   .action-btn svg{width:21px;height:21px}
+  .table-controls{gap:10px;margin:0 0 16px;padding:0}
+  .recovery + .table-controls{margin-top:12px}
   .reset{height:56px;font-size:21px}
 }
 
