@@ -10,7 +10,9 @@ const versionInfo=document.getElementById('version-info');
 const versionTooltip=document.getElementById('version-tooltip');
 const minus=document.getElementById('minus');
 const tableFontSize=document.getElementById('table-font-size');
+const tableFontSizeValue=document.getElementById('table-font-size-value');
 const rowHeight=document.getElementById('row-height');
+const rowHeightValue=document.getElementById('row-height-value');
 
 const BASE_LOT=0.01;
 const BASE_SL_PIPS=40;
@@ -60,6 +62,7 @@ function updateRowHeight(save=false){
   document.documentElement.style.setProperty('--table-row-height',`${height}px`);
   document.documentElement.style.setProperty('--action-button-height',`${buttonHeight}px`);
   updateSliderProgress(rowHeight);
+  rowHeightValue.textContent=`${height}px`;
   if(save){
     try{
       localStorage.setItem(ROW_HEIGHT_STORAGE_KEY,String(height));
@@ -71,6 +74,7 @@ function updateTableFontSize(save=false){
   const fontSize=Number(tableFontSize.value);
   document.documentElement.style.setProperty('--table-font-size',`${fontSize}px`);
   updateSliderProgress(tableFontSize);
+  tableFontSizeValue.textContent=`${fontSize}px`;
   if(save){
     try{
       localStorage.setItem(TABLE_FONT_SIZE_STORAGE_KEY,String(fontSize));
