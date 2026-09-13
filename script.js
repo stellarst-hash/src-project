@@ -66,7 +66,7 @@ function updateRowHeight(save=false){
   if(save){
     try{
       localStorage.setItem(ROW_HEIGHT_STORAGE_KEY,String(height));
-    }catch{}
+    }catch(error){}
   }
 }
 
@@ -78,7 +78,7 @@ function updateTableFontSize(save=false){
   if(save){
     try{
       localStorage.setItem(TABLE_FONT_SIZE_STORAGE_KEY,String(fontSize));
-    }catch{}
+    }catch(error){}
   }
 }
 
@@ -94,7 +94,7 @@ function restoreSliderValue(slider,storageKey){
     if(savedValue>=Number(slider.min)&&savedValue<=Number(slider.max)){
       slider.value=savedValue;
     }
-  }catch{}
+  }catch(error){}
 }
 
 const WIN_ICON=`<svg viewBox="0 0 32 32"><path d="M3 25l8-9 5 4 9-12"/><path d="M20 8h5v5"/></svg>`;
@@ -173,7 +173,11 @@ tableFontSize.value=Math.round(parseFloat(getComputedStyle(document.documentElem
 rowHeight.value=Math.round(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--table-row-height')));
 restoreSliderValue(tableFontSize,TABLE_FONT_SIZE_STORAGE_KEY);
 restoreSliderValue(rowHeight,ROW_HEIGHT_STORAGE_KEY);
-tableFontSize.addEventListener('input',()=>updateTableFontSize(true));
-rowHeight.addEventListener('input',()=>updateRowHeight(true));
+function bindSlider(slider,update){
+  slider.addEventListener('input',function(){update(true);});
+  slider.addEventListener('change',function(){update(true);});
+}
+bindSlider(tableFontSize,updateTableFontSize);
+bindSlider(rowHeight,updateRowHeight);
 updateTableFontSize();
 updateRowHeight();
