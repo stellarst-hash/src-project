@@ -60,7 +60,9 @@ const formatLot=value=>value.toFixed(2);
 const parsePositiveNumber=value=>Number(String(value).replace(/[$,\s]/g,''));
 
 function addVersionOption(name){
-  if([...version.options].some(option=>option.value===name))return;
+  for(let index=0;index<version.options.length;index+=1){
+    if(version.options[index].value===name)return;
+  }
   const option=document.createElement('option');
   option.value=name;
   option.textContent=name;
@@ -68,7 +70,7 @@ function addVersionOption(name){
 }
 
 function persistCustomVersions(){
-  const customVersions=[...customVersionNames].map(name=>({name,config:versions[name]}));
+  const customVersions=Array.from(customVersionNames).map(name=>({name,config:versions[name]}));
   try{
     localStorage.setItem(CUSTOM_VERSIONS_STORAGE_KEY,JSON.stringify(customVersions));
   }catch(error){}
@@ -80,7 +82,7 @@ function restoreCustomVersions(){
     if(!Array.isArray(customVersions))return;
     customVersions.forEach(({name,config})=>{
       const versionName=typeof name==='string'?name.trim():'';
-      const risks=Array.isArray(config?.risks)?config.risks.map(parsePositiveNumber):[];
+      const risks=config&&Array.isArray(config.risks)?config.risks.map(parsePositiveNumber):[];
       if(!versionName||versions[versionName]||risks.length===0||risks.some(risk=>!Number.isFinite(risk)||risk<=0))return;
       const initialBalanceValue=parsePositiveNumber(config.initialBalance);
       const baseRiskValue=parsePositiveNumber(config.baseRisk);
@@ -118,11 +120,13 @@ function duplicateCurrentVersion(){
 
   const source=versions[version.value];
   versions[versionName]={
-    ...source,
+    initialBalance:source.initialBalance,
+    baseRisk:source.baseRisk,
+    riskReward:source.riskReward,
     label:versionName,
     description:`Custom version duplicated from ${version.value}.`,
     tooltip:`Custom version duplicated from ${version.value}.`,
-    risks:[...source.risks]
+    risks:source.risks.slice()
   };
   customVersionNames.add(versionName);
   addVersionOption(versionName);
@@ -136,9 +140,10 @@ function duplicateCurrentVersion(){
 function restoreVersionSettings(){
   try{
     const savedSettings=JSON.parse(localStorage.getItem(VERSION_SETTINGS_STORAGE_KEY));
-    Object.entries(savedSettings||{}).forEach(([name,saved])=>{
+    Object.keys(savedSettings||{}).forEach(name=>{
+      const saved=savedSettings[name];
       const config=versions[name];
-      if(!config)return;
+      if(!config||!saved)return;
       const initialBalanceValue=parsePositiveNumber(saved.initialBalance);
       const baseRiskValue=parsePositiveNumber(saved.baseRisk);
       const riskRewardValue=parsePositiveNumber(saved.riskReward);
@@ -155,15 +160,16 @@ function restoreVersionSettings(){
 }
 
 function persistVersionSettings(){
-  const settings=Object.fromEntries(Object.entries(versions).map(([name,config])=>[
-    name,
-    {
+  const settings={};
+  Object.keys(versions).forEach(name=>{
+    const config=versions[name];
+    settings[name]={
       initialBalance:config.initialBalance,
       baseRisk:config.baseRisk,
       riskReward:config.riskReward,
       risks:config.risks
-    }
-  ]));
+    };
+  });
   try{
     localStorage.setItem(VERSION_SETTINGS_STORAGE_KEY,JSON.stringify(settings));
   }catch(error){}
@@ -210,7 +216,7 @@ function saveSettings(){
     return;
   }
 
-  const riskInputs=[...rows.querySelectorAll('.table-risk-input')];
+  const riskInputs=Array.from(rows.querySelectorAll('.table-risk-input'));
   const riskValues=riskInputs.map(input=>parsePositiveNumber(input.value));
   const invalidRiskIndex=riskValues.findIndex(value=>!Number.isFinite(value)||value<=0);
   if(invalidRiskIndex!==-1){
