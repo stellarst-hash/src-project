@@ -39,19 +39,35 @@
       </tbody>
     </table>
   </section>
+  <div class="table-edit-actions" id="table-edit-actions" hidden>
+    <button class="delete-row" id="delete-row" type="button">Delete last row</button>
+    <button class="add-row" id="add-row" type="button">+ Add row</button>
+  </div>
 
-  <button class="reset" id="reset" type="button">
-    <span>Reset</span>
-  </button>
+  <div class="reset-actions">
+    <button class="blue-action" id="settings" type="button" aria-label="Edit version settings">
+      <svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.02-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.37-.31-.6-.22l-2.49 1a7.2 7.2 0 0 0-1.69-.98l-.38-2.65A.5.5 0 0 0 14 2h-4a.5.5 0 0 0-.5.42l-.38 2.65c-.61.25-1.18.58-1.69.98l-2.49-1c-.23-.09-.48 0-.6.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.05.32-.08.65-.08.98s.03.66.08.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.37.31.6.22l2.49-1c.51.4 1.08.73 1.69.98l.38 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.38-2.65c.61-.25 1.17-.58 1.69-.98l2.49 1c.23.09.48 0 .6-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"/>
+      </svg>
+    </button>
+    <button class="reset" id="reset" type="button">
+      <span>Reset</span>
+    </button>
+  </div>
 
   <section class="panel recovery">
     <div class="version-control">
-      <div class="select-wrap">
-        <select class="select-box" id="version">
-          <option>Accelerate</option>
-          <option>Stability</option>
-        </select>
-        <span class="select-arrow"></span>
+      <div class="version-select-control">
+        <div class="select-wrap">
+          <select class="select-box" id="version">
+            <option>Accelerate</option>
+            <option>Stability</option>
+          </select>
+          <span class="select-arrow"></span>
+        </div>
+        <button class="duplicate-version" id="duplicate-version" type="button" aria-label="Duplicate current version">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+        </button>
       </div>
       <div class="version-title">
         <label class="label" id="version-label" for="version">Adaptive Recovery</label>
@@ -62,16 +78,16 @@
     </div>
     <div class="recovery-grid">
       <div>
-        <label class="label">Initial Balance</label>
-        <div class="value-box" id="initial-balance">$50,000</div>
+        <label class="label" for="initial-balance">Initial Balance</label>
+        <input class="value-box" id="initial-balance" type="text" inputmode="decimal" autocomplete="off" disabled>
       </div>
       <div>
-        <label class="label">Base Risk</label>
-        <div class="value-box" id="base-risk">$1,000</div>
+        <label class="label" for="base-risk">Base Risk</label>
+        <input class="value-box" id="base-risk" type="text" inputmode="decimal" autocomplete="off" disabled>
       </div>
       <div>
-        <label class="label">RR</label>
-        <div class="value-box" id="rr">1 : 3</div>
+        <label class="label" for="rr">RR</label>
+        <input class="value-box" id="rr" type="text" inputmode="decimal" autocomplete="off" disabled>
       </div>
     </div>
   </section>
